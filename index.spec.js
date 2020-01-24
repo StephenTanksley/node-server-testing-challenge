@@ -44,16 +44,16 @@ test('create workout', async () => {
 test('update workout', async () => {
     const res = await supertest(server)
         .put('/workouts/1')
-        .send({
-            id: 1,
-            workout_name: "Stretching"
-        })
+        .send({ id: 1, workout_name: "Stretching" })
     expect(res.status).toBe(200)
     expect(res.type).toBe('application/json')
     expect(res.body[0]).toBe(1)
     expect(res.body[0].workout_name).toMatch(/stretching/i)
 })
 
-test('remove item from the DB', () => {
-    
+test('remove item from the DB', async () => {
+    const res = await supertest(server).delete('/workouts/1')
+    expect(res.status).toBe(204)
+    // expect(res.body).toBe() -- need some help understanding this.
+    // expect(res.type).toBe('application/json')
 })
