@@ -28,11 +28,11 @@ describe('server.js', () => {
         // })
     })
 
-    describe('/sing route', () => {
-        it('should return an OK status code from the /sing route', async () => {
-            const expectedBody = { message: "I believe I can fly, I believe I can test RESTFUL APIs"}
-            const response = await request(server).get('/sing')
-            expect(response.body).toEqual(expectedBody)
-        })
-    })
+    // describe('/sing route', () => {
+    //     it('should return an OK status code from the /sing route', async () => {
+    //         const expectedBody = { message: "I believe I can fly, I believe I can test RESTFUL APIs"}
+    //         const response = await request(server).get('/sing')
+    //         expect(response.body).toEqual(expectedBody)
+    //     })
+    // })
 })
