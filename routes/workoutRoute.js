@@ -29,7 +29,7 @@ router.get('/:id', validateWorkoutId(), async (req, res, next) => {
 
 router.post('/', validateWorkout(), async (req, res, next) => {
     try {
-        const workout = await workoutModel.insert(req.body)
+        const workout = await workoutModel.add(req.body)
         res.status(201).json(workout)
     }
     catch (error) {

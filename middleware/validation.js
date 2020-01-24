@@ -10,7 +10,6 @@ const validateWorkoutId = () => async (req, res, next) => {
 };
 
 //used to validate that there's stuff in the body to be sent.
-
 const validateWorkout = () => async (req, res, next) => {
     if(!req.body) {
         return res
