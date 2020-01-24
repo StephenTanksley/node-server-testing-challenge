@@ -1,4 +1,3 @@
-
 exports.seed = async (knex) => {
   await knex('workout').insert([
     { id: 1, workout_name: "Push"},
