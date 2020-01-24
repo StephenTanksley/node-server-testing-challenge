@@ -44,7 +44,7 @@ test('create workout', async () => {
 test('update workout', async () => {
     const res = await supertest(server)
         .put('/workouts/1')
-        .send({ id: 1, workout_name: "Stretching" })
+        .send({ workout_name: "Stretching" })
     expect(res.status).toBe(200)
     expect(res.type).toBe('application/json')
     expect(res.body[0]).toBe(1)

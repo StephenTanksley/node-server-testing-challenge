@@ -1,7 +1,7 @@
 const express = require('express')
 const workoutModel = require('./workoutModel')
 
-const {validateWorkout} = require('../middleware/validation.js')
+const {validateWorkout, validateWorkoutId} = require('../middleware/validation.js')
 
 const router = express()
 
@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', validateWorkoutId(), async (req, res, next) => {
     try {
         const payload = await workoutModel.getById(req.params.id)
         res
@@ -28,14 +28,29 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', validateWorkout(), async (req, res, next) => {
-
+    try {
+        const workout = await workoutModel.insert(req.body)
+        res.status(201).json(workout)
+    }
+    catch (error) {
+        next(error)
+    }
 })
 
-router.put('/:id', validateWorkout(), async (req, res, next) => {
+router.put('/:id', validateWorkout(), validateWorkoutId(), async (req, res, next) => {
+    const changes = req.body
+    const { id } = req.params
 
+    try {
+        const updates = await workoutModel.update(id, changes)
+        res.status(200).json(updates)
+    }
+    catch (error) {
+        next(error)
+    }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', validateWorkoutId(), async (req, res, next) => {
     try { 
         const deletedWorkout = await workoutModel.remove(req.params.id)
         if(deletedWorkout > 0) { 

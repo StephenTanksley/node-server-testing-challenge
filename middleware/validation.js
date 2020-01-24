@@ -1,14 +1,16 @@
-const workoutDb = require('../data/dbConfig')
+const workoutDb = require('../routes/workoutModel')
 
-// const validateWorkoutId = () => async (req, res, next) => {
-//     const workout = await workoutDb.getById(req.params.id)
-//         if(!workout) {
-//             return res.status(400).json({ message: 'Invalid workout id.'})
-//         }
-//         req.(something) = id
-// }
+const validateWorkoutId = () => async (req, res, next) => {
+    const workout = await workoutDb.getById(req.params.id)
+        if(!workout) {
+            return res.status(400).json({ message: 'Invalid workout id.'})
+        }
+        req.workoutId = workout
+        next()
+};
 
 //used to validate that there's stuff in the body to be sent.
+
 const validateWorkout = () => async (req, res, next) => {
     if(!req.body) {
         return res
@@ -22,4 +24,5 @@ const validateWorkout = () => async (req, res, next) => {
 
 module.exports = {
     validateWorkout,
+    validateWorkoutId,
 }
