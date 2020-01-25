@@ -32,35 +32,51 @@ test('Workout list', async () => {
 
 //need to figure out how to test creating an item and updating an item.
 
-// test('create workout', async () => {
-//     const res = await supertest(server)
-//         .post('/workouts')
-//         .send({ workout_name: "Kenpo"})
+test('create workout', async () => {
+    const res = await supertest(server)
+        .post('/workouts')
+        .send({ workout_name: "Kenpo"})
+    //does it return the proper status code?
+    expect(res.status).toBe(201)
 
-//     expect(res.status).toBe(201)
-//     expect(res.type).toBe('application/json')
-//     expect(res.body.length).toBe(1)
-//     expect(res.body.workout_name).toMatch(/kenpo/i)
-// })
+    //does it return the proper type?
+    expect(res.type).toBe('application/json')
+    
+    //does it return the data we expect to see?
+    expect(res.body).toEqual({
+        id: 4,
+        workout_name: "Kenpo"
+    })
+})
 
-// test('update workout', async () => {
-//     const res = await supertest(server)
-//         .put('/workouts/1')
-//         .send({ workout_name: "Stretching" })
-//     expect(res.status).toBe(200)
-//     expect(res.type).toBe('application/json')
-//     expect(res.body[0].workout_name).toMatch(/stretching/i)
-// })
+test('update workout', async () => {
+    const res = await supertest(server)
+        .put('/workouts/1')
+        .send({ workout_name: "Stretching" })
+
+    //does it return the expected status code?
+    expect(res.status).toBe(200)
+
+    //does it return the expected data format?
+    expect(res.type).toBe('application/json')
+
+    //does it return the data we expect?
+    expect(res.body).toEqual({
+        id: 1,
+        workout_name: "Stretching"
+    })
+})
 
 test('remove item from the DB', async () => {
     const res = await supertest(server).delete('/workouts/1')
     expect(res.status).toBe(204)
-    // expect(res.body).toBe()
-    // expect(res.type).toBe('application/json')
+    expect(res.type).toBe('')
+    // expect(res.body).toBe("")
 })
 
 test('remove an item from the DB', async () => {
    const res = await supertest(server).delete('/workouts/1')
    const workouts = await db('workout')
+
    expect(workouts.length).toBe(2)
 })

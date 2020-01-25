@@ -3,12 +3,13 @@ const db = require('../data/dbConfig')
 // functions I need to add:
 
 const get = () => {
-    return db('workout')
+    return db('workout').select("*")
 }
 
 const getById = (id) => {
     return db('workout')
         .where({ id })
+        .select("*")
         .first()
 }
 
